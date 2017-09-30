@@ -4,7 +4,18 @@
 #include <sourcemod>
 #include <sdktools>
 
+#define PLUGIN_VERSION "1.0.0"
+
+public Plugin myinfo = {
+	name        = "[TF2] pda_click Fix",
+	author      = "FlaminSarge",
+	description = "Fixes the pda_click animation not appearing to the player using it",
+	version     = PLUGIN_VERSION,
+	url         = "https://github.com/FlaminSarge/pda_click"
+};
+
 public void OnPluginStart() {
+	CreateConVar("pda_click_version", PLUGIN_VERSION, "[TF2] pda_click Fix Version", FCVAR_NOTIFY);
 	AddTempEntHook("PlayerAnimEvent", PlayerAnimEvent);
 }
 
