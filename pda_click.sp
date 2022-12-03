@@ -20,7 +20,9 @@ public void OnPluginStart() {
 }
 
 public Action PlayerAnimEvent(const char[] te_name, const int[] clients, int numClients, float delay) {
-	int client = TE_ReadNum("m_iPlayerIndex");
+	int ehandle = TE_ReadNum("m_hPlayer");
+	int client = ehandle & ((1<<11) - 1);
+	
 	if (client <= 0 || client > MaxClients || !IsClientInGame(client) || !IsPlayerAlive(client)) {
 		return Plugin_Continue;
 	}
@@ -52,7 +54,7 @@ public Action PlayerAnimEvent(const char[] te_name, const int[] clients, int num
 	//resend the event with the sending client added to recipients
 	clResult[numClients] = client;
 	TE_Start("PlayerAnimEvent");
-	TE_WriteNum("m_iPlayerIndex", client);
+	TE_WriteNum("m_hPlayer", ehandle);
 	TE_WriteNum("m_iEvent", event);
 	TE_WriteNum("m_nData", data);
 	TE_Send(clResult, numClients+1, delay);
