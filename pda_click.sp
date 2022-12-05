@@ -21,7 +21,7 @@ public void OnPluginStart() {
 
 public Action PlayerAnimEvent(const char[] te_name, const int[] clients, int numClients, float delay) {
 	int ehandle = TE_ReadNum("m_hPlayer");
-	int client = ehandle & ((1<<11) - 1);
+	int client = EntRefToEntIndex(ehandle | (1<<31));
 	
 	if (client <= 0 || client > MaxClients || !IsClientInGame(client) || !IsPlayerAlive(client)) {
 		return Plugin_Continue;
